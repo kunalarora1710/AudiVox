@@ -1,0 +1,179 @@
+Total number of currently running services:0
+Libraries NOT loaded:
+Libraries loaded:
+ Library dynamics_processing
+  path: /vendor/lib/soundfx/libdynproc.so
+  Dynamics Processing / The Android Open Source Project
+    UUID: e0e6539b-1781-7261-676f-6d7573696340
+    TYPE: 7261676f-6d75-7369-6364-28e2fd3ac39e
+    apiVersion: 00020000
+    flags: 00000050
+ Library loudness_enhancer
+  path: /vendor/lib/soundfx/libldnhncr.so
+  Loudness Enhancer / The Android Open Source Project
+    UUID: fa415329-2034-4bea-b5dc-5b381c8d1e2c
+    TYPE: fe3199be-aed0-413f-87bb-11260eb63cf1
+    apiVersion: 00020000
+    flags: 00000008
+ Library downmix
+  path: /vendor/lib/soundfx/libdownmix.so
+  Multichannel Downmix To Stereo / The Android Open Source Project
+    UUID: 93f04452-e4fe-41cc-91f9-e475b6d1d69f
+    TYPE: 381e49cc-a858-4aa2-87f6-e8388e7601b2
+    apiVersion: 00020000
+    flags: 00000008
+ Library visualizer
+  path: /vendor/lib/soundfx/libvisualizer.so
+  Visualizer / The Android Open Source Project
+    UUID: d069d9e0-8329-11df-9168-0002a5d5c51b
+    TYPE: e46b26a0-dddd-11db-8afd-0002a5d5c51b
+    apiVersion: 00020000
+    flags: 00000008
+ Library reverb
+  path: /vendor/lib/soundfx/libreverbwrapper.so
+  Insert Preset Reverb / NXP Software Ltd.
+    UUID: 172cdf00-a3bc-11df-a72f-0002a5d5c51b
+    TYPE: 47382d60-ddd8-11db-bf3a-0002a5d5c51b
+    apiVersion: 00020000
+    flags: 00000048
+  Auxiliary Preset Reverb / NXP Software Ltd.
+    UUID: f29a1400-a3bb-11df-8ddc-0002a5d5c51b
+    TYPE: 47382d60-ddd8-11db-bf3a-0002a5d5c51b
+    apiVersion: 00020000
+    flags: 00000001
+  Insert Environmental Reverb / NXP Software Ltd.
+    UUID: c7a511a0-a3bb-11df-860e-0002a5d5c51b
+    TYPE: c2e5d5f0-94bd-4763-9cac-4e234d06839e
+    apiVersion: 00020000
+    flags: 00000048
+  Auxiliary Environmental Reverb / NXP Software Ltd.
+    UUID: 4a387fc0-8ab3-11df-8bad-0002a5d5c51b
+    TYPE: c2e5d5f0-94bd-4763-9cac-4e234d06839e
+    apiVersion: 00020000
+    flags: 00000001
+ Library bundle
+  path: /vendor/lib/soundfx/libbundlewrapper.so
+  Volume / NXP Software Ltd.
+    UUID: 119341a0-8469-11df-81f9-0002a5d5c51b
+    TYPE: 09e8ede0-ddde-11db-b4f6-0002a5d5c51b
+    apiVersion: 00020000
+    flags: 00000050
+  Equalizer / NXP Software Ltd.
+    UUID: ce772f20-847d-11df-bb17-0002a5d5c51b
+    TYPE: 0bed4300-ddd6-11db-8f34-0002a5d5c51b
+    apiVersion: 00020000
+    flags: 00000048
+  Virtualizer / NXP Software Ltd.
+    UUID: 1d4033c0-8557-11df-9f2d-0002a5d5c51b
+    TYPE: 37cc2c00-dddd-11db-8577-0002a5d5c51b
+    apiVersion: 00020000
+    flags: 00000250
+  Dynamic Bass Boost / NXP Software Ltd.
+    UUID: 8631f300-72e2-11df-b57e-0002a5d5c51b
+    TYPE: 0634f220-ddd4-11db-a0fc-0002a5d5c51b
+    apiVersion: 00020000
+    flags: 00000248
+XML effect configuration failed to load.
+Clients:
+  pid: 2004
+  pid: 5564
+Notification Clients:
+  pid: 1841
+  pid: 2004
+  pid: 2231
+  pid: 5564
+Global session refs:
+  session   pid count
+       17  2004     1
+       41  5564     1
+Hardware status: 0
+Standby Time mSec: 3000
+
+Output thread 0xe7e03080, name AudioOut_D, tid 1982, type 0 (MIXER):
+  I/O handle: 13
+  Standby: no
+  Sample rate: 48000 Hz
+  HAL frame count: 1024
+  HAL format: 0x1 (AUDIO_FORMAT_PCM_16_BIT)
+  HAL buffer size: 4096 bytes
+  Channel count: 2
+  Channel mask: 0x00000003 (front-left, front-right)
+  Processing format: 0x1 (AUDIO_FORMAT_PCM_16_BIT)
+  Processing frame size: 4 bytes
+  Pending config events: none
+  Output device: 0x2 (AUDIO_DEVICE_OUT_SPEAKER)
+  Input device: 0 (AUDIO_DEVICE_NONE)
+  Audio source: 0 (default)
+  Normal frame count: 1024
+  Last write occurred (msecs): 18
+  Total writes: 19401
+  Delayed writes: 0
+  Blocked in write: yes
+  Suspend count: 0
+  Sink buffer : 0xe888f000
+  Mixer buffer: 0xe88f5000
+  Effect buffer: 0xe88f7000
+  Fast track availMask=0xfe
+  Standby delay ns=3000000000
+  AudioStreamOut: 0xe88c9880 flags 0x2 (AUDIO_OUTPUT_FLAG_PRIMARY)
+  Frames written: 19866624
+  Suspended frames: 0
+  Hal stream dump:
+  Thread throttle time (msecs): 298
+  AudioMixer tracks: 0 1 
+  Master mono: off
+  No FastMixer
+  Stream volumes in dB: 0:0, 1:-6, 2:0, 3:-3.8, 4:0, 5:0, 6:-inf, 7:-6, 8:-6, 9:0, 10:-4.1, 11:0, 12:0
+  Normal mixer raw underrun counters: partial=0 empty=0
+  2 Tracks of which 1 are active
+    T Name Active Client Session S  Flags   Format Chn mask  SRate ST  L dB  R dB  VS dB   Server FrmCnt  FrmRdy F Underruns  Flushed Main Buf  Aux Buf
+    S    0     no   2004      17 S  0x600 00000001 00000003  44100  1  -inf  -inf     0  0000D28A   4146       0 f         0        0 E888F000 00000000
+         1    yes   5564      41 A  0x000 00000005 00000003  48000  3     0     0     0  006F1800   4104    2944 A      2052     3068 E888F000 00000000
+  0 Effect Chains
+  Local log:
+   10-10 20:38:07.213 CFG_EVENT_CREATE_AUDIO_PATCH: old device 0x2 (AUDIO_DEVICE_OUT_SPEAKER) new device 0x2 (AUDIO_DEVICE_OUT_SPEAKER)
+   10-10 20:38:07.213 AT::add       (0xe84e6280)      1     no   4374      25 A  0x200 00000005 00000003  48000  3     0     0     0  00566C00   4104       0 f      1026     3880 E888F000 00000000
+   10-10 20:38:37.334 AT::remove    (0xe84e6280)      1     no   4374      25 I  0x600 00000005 00000003  48000  3     0     0     0  006C6400   4104       0 f      2052     7984 E888F000 00000000
+   10-10 20:38:42.224 removeTrack_l (0xe84e6280)      1     no   4374      25 T  0x600 00000005 00000003  48000  3     0     0     0  006C6400   4104       0 f      2052     7984 E888F000 00000000
+   10-10 20:38:43.256 CFG_EVENT_CREATE_AUDIO_PATCH: old device 0x2 (AUDIO_DEVICE_OUT_SPEAKER) new device 0x2 (AUDIO_DEVICE_OUT_SPEAKER)
+   10-10 20:38:43.256 AT::add       (0xe84e6000) S    0     no   2004      17 A  0x200 00000001 00000003  44100  1    -6    -6     0  000050FA   4146       0 F         0        0 E888F000 00000000
+   10-10 20:38:43.403 AT::remove    (0xe84e6000) S    0     no   2004      17 S  0x600 00000001 00000003  44100  1  -inf  -inf     0  0000612C   4146       0 f         0        0 E888F000 00000000
+   10-10 20:38:43.520 CFG_EVENT_CREATE_AUDIO_PATCH: old device 0x2 (AUDIO_DEVICE_OUT_SPEAKER) new device 0x2 (AUDIO_DEVICE_OUT_SPEAKER)
+   10-10 20:38:43.520 AT::add       (0xe84e6000) S    0     no   2004      17 A  0x200 00000001 00000003  44100  1    -6    -6     0  0000612C   4146       0 F         0        0 E888F000 00000000
+   10-10 20:38:43.723 AT::remove    (0xe84e6000) S    0     no   2004      17 S  0x600 00000001 00000003  44100  1  -inf  -inf     0  0000715E   4146       0 f         0        0 E888F000 00000000
+   10-10 20:39:18.048 CFG_EVENT_CREATE_AUDIO_PATCH: old device 0x2 (AUDIO_DEVICE_OUT_SPEAKER) new device 0x2 (AUDIO_DEVICE_OUT_SPEAKER)
+   10-10 20:39:18.049 AT::add       (0xe84e6000) S    0     no   2004      17 A  0x200 00000001 00000003  44100  1    -6    -6     0  0000715E   4146       0 F         0        0 E888F000 00000000
+   10-10 20:39:18.196 AT::remove    (0xe84e6000) S    0     no   2004      17 S  0x600 00000001 00000003  44100  1  -inf  -inf     0  00008190   4146       0 f         0        0 E888F000 00000000
+   10-10 20:39:31.133 CFG_EVENT_CREATE_AUDIO_PATCH: old device 0x2 (AUDIO_DEVICE_OUT_SPEAKER) new device 0x2 (AUDIO_DEVICE_OUT_SPEAKER)
+   10-10 20:39:31.133 AT::add       (0xe84e6000) S    0     no   2004      17 A  0x200 00000001 00000003  44100  1    -6    -6     0  00008190   4146       0 F         0        0 E888F000 00000000
+   10-10 20:39:31.280 AT::remove    (0xe84e6000) S    0     no   2004      17 S  0x600 00000001 00000003  44100  1  -inf  -inf     0  000091C2   4146       0 f         0        0 E888F000 00000000
+   10-10 20:39:31.370 CFG_EVENT_CREATE_AUDIO_PATCH: old device 0x2 (AUDIO_DEVICE_OUT_SPEAKER) new device 0x2 (AUDIO_DEVICE_OUT_SPEAKER)
+   10-10 20:39:31.370 AT::add       (0xe84e6000) S    0     no   2004      17 A  0x200 00000001 00000003  44100  1    -6    -6     0  000091C2   4146       0 F         0        0 E888F000 00000000
+   10-10 20:39:31.580 AT::remove    (0xe84e6000) S    0     no   2004      17 S  0x600 00000001 00000003  44100  1  -inf  -inf     0  0000A1F4   4146       0 f         0        0 E888F000 00000000
+   10-10 20:39:32.246 CFG_EVENT_CREATE_AUDIO_PATCH: old device 0x2 (AUDIO_DEVICE_OUT_SPEAKER) new device 0x2 (AUDIO_DEVICE_OUT_SPEAKER)
+   10-10 20:39:32.246 AT::add       (0xe84e6000) S    0     no   2004      17 A  0x200 00000001 00000003  44100  1    -6    -6     0  0000A1F4   4146       0 F         0        0 E888F000 00000000
+   10-10 20:39:32.450 AT::remove    (0xe84e6000) S    0     no   2004      17 S  0x600 00000001 00000003  44100  1  -inf  -inf     0  0000B226   4146       0 f         0        0 E888F000 00000000
+   10-10 20:41:33.349 CFG_EVENT_CREATE_AUDIO_PATCH: old device 0x2 (AUDIO_DEVICE_OUT_SPEAKER) new device 0x2 (AUDIO_DEVICE_OUT_SPEAKER)
+   10-10 20:41:33.350 AT::add       (0xe84e6000) S    0     no   2004      17 A  0x200 00000001 00000003  44100  1    -6    -6     0  0000B226   4146       0 F         0        0 E888F000 00000000
+   10-10 20:41:33.497 AT::remove    (0xe84e6000) S    0     no   2004      17 S  0x600 00000001 00000003  44100  1  -inf  -inf     0  0000C258   4146       0 f         0        0 E888F000 00000000
+   10-10 20:41:42.566 CFG_EVENT_CREATE_AUDIO_PATCH: old device 0x2 (AUDIO_DEVICE_OUT_SPEAKER) new device 0x2 (AUDIO_DEVICE_OUT_SPEAKER)
+   10-10 20:41:42.567 AT::add       (0xe84e6280)      1     no   5236      33 A  0x000 00000005 00000003  48000  3     0     0     0  00000000   4104       0 f         0        0 E888F000 00000000
+   10-10 20:42:32.565 AT::remove    (0xe84e6280)      1     no   5236      33 I  0x600 00000005 00000003  48000  3     0     0     0  00248C00   4104       0 f      2052     3652 E888F000 00000000
+   10-10 20:42:33.333 CFG_EVENT_CREATE_AUDIO_PATCH: old device 0x2 (AUDIO_DEVICE_OUT_SPEAKER) new device 0x2 (AUDIO_DEVICE_OUT_SPEAKER)
+   10-10 20:42:33.333 AT::add       (0xe84e6280)      1     no   5236      33 A  0x200 00000005 00000003  48000  3     0     0     0  00248C00   4104       0 f      2052     3652 E888F000 00000000
+   10-10 20:43:06.096 AT::remove    (0xe84e6280)      1     no   5236      33 I  0x600 00000005 00000003  48000  3     0     0     0  003C7400   4104       0 f      2052     7756 E888F000 00000000
+   10-10 20:43:10.992 removeTrack_l (0xe84e6280)      1     no   5236      33 T  0x600 00000005 00000003  48000  3     0     0     0  003C7400   4104       0 f      2052     7756 E888F000 00000000
+   10-10 20:44:16.749 CFG_EVENT_CREATE_AUDIO_PATCH: old device 0x2 (AUDIO_DEVICE_OUT_SPEAKER) new device 0x2 (AUDIO_DEVICE_OUT_SPEAKER)
+   10-10 20:44:16.749 AT::add       (0xe84e6000) S    0     no   2004      17 A  0x200 00000001 00000003  44100  1    -6    -6     0  0000C258   4146       0 F         0        0 E888F000 00000000
+   10-10 20:44:16.896 AT::remove    (0xe84e6000) S    0     no   2004      17 S  0x600 00000001 00000003  44100  1  -inf  -inf     0  0000D28A   4146       0 f         0        0 E888F000 00000000
+   10-10 20:45:06.269 CFG_EVENT_CREATE_AUDIO_PATCH: old device 0x2 (AUDIO_DEVICE_OUT_SPEAKER) new device 0x2 (AUDIO_DEVICE_OUT_SPEAKER)
+   10-10 20:45:06.269 AT::add       (0xe88e0280)      1     no   5564      41 A  0x000 00000005 00000003  48000  3     0     0     0  00000000   4104       0 f         0        0 E888F000 00000000
+   10-10 20:45:39.077 AT::remove    (0xe88e0280)      1     no   5564      41 I  0x600 00000005 00000003  48000  3     0     0     0  0017F800   4104       0 f      1026     3068 E888F000 00000000
+   10-10 20:45:39.617 CFG_EVENT_CREATE_AUDIO_PATCH: old device 0x2 (AUDIO_DEVICE_OUT_SPEAKER) new device 0x2 (AUDIO_DEVICE_OUT_SPEAKER)
+   10-10 20:45:39.617 AT::add       (0xe88e0280)      1     no   5564      41 A  0x200 00000005 00000003  48000  3     0     0     0  0017F800   4104       0 f      1026     3068 E888F000 00000000
+
+USB audio module:
+  No output streams.
+
+  No input streams.
+

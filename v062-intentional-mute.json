@@ -1,0 +1,43 @@
+{
+  "id": 1,
+  "result": {
+    "result": {
+      "type": "object",
+      "value": {
+        "intentionalMute": true,
+        "muted": true,
+        "audio": {
+          "graphs": 1,
+          "settings": {
+            "enabled": true,
+            "tone": [
+              1,
+              1,
+              1
+            ],
+            "clarity": 0,
+            "ambience": 0,
+            "width": 0,
+            "dynamics": 0,
+            "bass": 0,
+            "reverbPreset": 0,
+            "reverbAmount": 0
+          },
+          "context": "running",
+          "levels": [
+            {
+              "input": {
+                "rms": 0,
+                "peak": 0
+              },
+              "output": {
+                "rms": 0,
+                "peak": 0
+              }
+            }
+          ]
+        }
+      }
+    }
+  }
+}

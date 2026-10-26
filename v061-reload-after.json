@@ -1,0 +1,21 @@
+{
+  "id": 1,
+  "result": {
+    "result": {
+      "type": "object",
+      "value": {
+        "state": {
+          "playing": true,
+          "title": "Restless - YouTube",
+          "artist": "",
+          "position": 33853,
+          "duration": 168161,
+          "next": true,
+          "previous": false
+        },
+        "muted": false,
+        "reload": "{\"id\":\"vHUKcycwIwo\",\"until\":1791650924491,\"playing\":true,\"muted\":false,\"position\":23.209333,\"seekDone\":true}"
+      }
+    }
+  }
+}

@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Audio Lab</title><style>
+:root{color-scheme:dark;font-family:system-ui;background:#101719;color:#eefbf5}body{margin:0;padding:30px 22px}
+.eyebrow{color:#80efba;font-size:11px;font-weight:700;letter-spacing:2px}h1{font-size:34px;letter-spacing:-1px}
+p{line-height:1.6;color:#9cafa7}button,label{display:block;background:#80efba;color:#10271d;border:0;border-radius:14px;padding:16px;font:600 15px system-ui;text-align:center;margin:14px 0;cursor:pointer}
+audio{width:100%;margin:20px 0}input{display:none}.card{border:1px solid #2b3c36;border-radius:20px;padding:20px;margin-top:24px}.small{font-size:12px}
+html[data-audiovox-theme=light]{color-scheme:light;background:#f6f8fc;color:#162031}html[data-audiovox-theme=light] p{color:#697584}
+</style></head><body>
+<div class="eyebrow">AUDIOVOX / MY AUDIO</div><h1>Hear the difference.</h1>
+<p>Choose a song from Files, then press Play. Tap EQ below to compare Clarity, Ambience, Surround and Bass with your headphones. All values start at zero.</p>
+<label for="file">Choose an audio file</label><input id="file" type="file" accept="audio/*">
+<button id="demo">Load a gentle test chord</button><audio id="player" controls playsinline></audio>
+<p id="name" aria-live="polite">Your file stays on this device.</p>
+<div class="card"><strong>Listening check</strong><p class="small">Start at a low listening volume. For an honest comparison, match perceived volume with Effects on and off. The test chord checks routing; use a real song to judge clarity.</p></div>
+<script>
+let objectURL; const player=document.getElementById('player');
+function load(blob,name){player.pause();player.removeAttribute('src');player.load();if(objectURL)URL.revokeObjectURL(objectURL);objectURL=URL.createObjectURL(blob);player.src=objectURL;document.getElementById('name').textContent=name;}
+document.getElementById('file').onchange=e=>{const f=e.target.files[0];if(f)load(f,f.name);};
+document.getElementById('demo').onclick=()=>{
+ const rate=44100,n=rate*8,b=new ArrayBuffer(44+n*2),v=new DataView(b);
+ function str(o,s){for(let i=0;i<s.length;i++)v.setUint8(o+i,s.charCodeAt(i));}
+ str(0,'RIFF');v.setUint32(4,36+n*2,true);str(8,'WAVE');str(12,'fmt ');v.setUint32(16,16,true);v.setUint16(20,1,true);v.setUint16(22,1,true);v.setUint32(24,rate,true);v.setUint32(28,rate*2,true);v.setUint16(32,2,true);v.setUint16(34,16,true);str(36,'data');v.setUint32(40,n*2,true);
+ for(let i=0;i<n;i++){const t=i/rate,env=Math.min(1,t*5,(8-t)*5);const x=(Math.sin(t*2*Math.PI*130.81)+0.5*Math.sin(t*2*Math.PI*329.63)+0.3*Math.sin(t*2*Math.PI*783.99)+0.15*Math.sin(t*2*Math.PI*3135.96))*0.09*env;v.setInt16(44+i*2,Math.round(x*32767),true);}
+ load(new Blob([b],{type:'audio/wav'}),'Gentle test chord · 8 seconds');
+};
+</script></body></html>

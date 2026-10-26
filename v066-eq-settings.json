@@ -1,0 +1,23 @@
+{
+  "id": 1,
+  "result": {
+    "result": {
+      "type": "object",
+      "value": {
+        "enabled": true,
+        "tone": [
+          2,
+          -1,
+          1
+        ],
+        "clarity": 0,
+        "ambience": 0,
+        "width": 0,
+        "dynamics": 0,
+        "bass": 0,
+        "reverbPreset": 0,
+        "reverbAmount": 0
+      }
+    }
+  }
+}

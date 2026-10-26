@@ -1,0 +1,76 @@
+{
+  "sampleRate": 44100,
+  "passed": 13,
+  "total": 13,
+  "results": [
+    {
+      "name": "Clarity keeps vocal-range level within 3 dB",
+      "pass": true,
+      "changeDb": -2.1726458520409047
+    },
+    {
+      "name": "Neutral graph retains nominal level",
+      "pass": true,
+      "rms": 0.14142135598172947
+    },
+    {
+      "name": "Zero controls return unmodified samples",
+      "pass": true,
+      "maxError": 3.637978996827093e-13
+    },
+    {
+      "name": "Surround keeps mono centered with FxSound mid scaling",
+      "pass": true,
+      "midRatio": 0.7955086733755564,
+      "stereoError": 0
+    },
+    {
+      "name": "Surround matches FxSound 3.1x side and .79x mid gains",
+      "pass": true,
+      "sideRatio": 3.114240608955445,
+      "midRatio": 0.7936290835498102
+    },
+    {
+      "name": "Dynamic Boost raises the quiet test tone",
+      "pass": true,
+      "changeDb": 4.464221201393711
+    },
+    {
+      "name": "Clarity render matches the upstream Aural equation",
+      "pass": true,
+      "maxError": 2.681812587834731e-07
+    },
+    {
+      "name": "Clarity produces odd harmonics, not just an EQ boost",
+      "pass": true,
+      "thirdHarmonicAmplitude": 0.017611674472093313
+    },
+    {
+      "name": "Ambience generates a short audible-scale tail",
+      "pass": true,
+      "tailRms": 0.02472500215964541
+    },
+    {
+      "name": "Concert hall has a stronger late tail than medium room",
+      "pass": true,
+      "roomTailRms": 2.781665088870274e-05,
+      "hallTailRms": 0.0020371287097219
+    },
+    {
+      "name": "Huge cathedral retains a longer decay",
+      "pass": true,
+      "tailRms": 0.002700510140152118,
+      "hallTailRms": 0.00018556816778614454
+    },
+    {
+      "name": "Room tail has stereo diffusion",
+      "pass": true,
+      "correlation": 0.0006650512753649553
+    },
+    {
+      "name": "All effects at maximum stay finite and below digital full scale",
+      "pass": true,
+      "peak": 0.9765359163284302
+    }
+  ]
+}

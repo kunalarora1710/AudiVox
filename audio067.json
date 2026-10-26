@@ -1,0 +1,42 @@
+{
+  "id": 1,
+  "result": {
+    "result": {
+      "type": "object",
+      "value": {
+        "playing": true,
+        "audio": {
+          "graphs": 1,
+          "settings": {
+            "enabled": true,
+            "tone": [
+              0,
+              0,
+              0
+            ],
+            "clarity": 0,
+            "ambience": 0,
+            "width": 0,
+            "dynamics": 0,
+            "bass": 0,
+            "reverbPreset": 0,
+            "reverbAmount": 0
+          },
+          "context": "running",
+          "levels": [
+            {
+              "input": {
+                "rms": 0.07472383560541387,
+                "peak": 0.16340234875679016
+              },
+              "output": {
+                "rms": 0.07472383560541387,
+                "peak": 0.16340234875679016
+              }
+            }
+          ]
+        }
+      }
+    }
+  }
+}

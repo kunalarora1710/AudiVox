@@ -1,0 +1,15 @@
+{
+  "id": 1,
+  "result": {
+    "result": {
+      "type": "object",
+      "value": {
+        "fullscreen": true,
+        "orientation": "landscape-primary",
+        "width": 1067,
+        "height": 600,
+        "playing": true
+      }
+    }
+  }
+}

@@ -1,0 +1,54 @@
+name: Build iOS IPA (Cloud Build)
+on:
+  workflow_dispatch:
+  push:
+    branches: [ main, master ]
+permissions:
+  contents: read
+jobs:
+  build-ios:
+    runs-on: macos-14
+    timeout-minutes: 25
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js & Run Audio/Media Unit Tests
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Verify JS DSP & WebKit Bridge Tests
+        run: node --test tests/audio.test.cjs tests/ads.test.cjs tests/media.test.cjs tests/seek.test.cjs tests/ios-webkit.test.cjs
+
+      - name: Generate Xcode Project with XcodeGen
+        run: |
+          which xcodegen || brew install xcodegen
+          cd ios
+          xcodegen generate
+
+      - name: Build AudiVox iOS App (Release ARM64)
+        run: |
+          cd ios
+          xcodebuild clean build \
+            -project AudiVox.xcodeproj \
+            -scheme AudiVox \
+            -configuration Release \
+            -sdk iphoneos \
+            -derivedDataPath build \
+            CODE_SIGN_IDENTITY="" \
+            CODE_SIGNING_REQUIRED=NO \
+            CODE_SIGNING_ALLOWED=NO
+
+      - name: Package Unsigned .ipa for Wireless Sideloading (AltStore / SideStore / Feather / Sideloadly / Diawi)
+        run: |
+          mkdir -p ios/build/Payload
+          cp -R ios/build/Build/Products/Release-iphoneos/AudiVox.app ios/build/Payload/
+          cd ios/build
+          zip -r -9 AudiVox-0.6.9-iOS.ipa Payload
+
+      - name: Upload AudiVox iOS .ipa Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: AudiVox-0.6.9-iOS-IPA
+          path: ios/build/AudiVox-0.6.9-iOS.ipa
+          if-no-files-found: error

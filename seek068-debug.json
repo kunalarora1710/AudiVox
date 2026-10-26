@@ -1,0 +1,37 @@
+{
+  "before": {
+    "x": 512.7250122070312,
+    "y": 505.9739589691162,
+    "dpr": 1.5,
+    "rect": {
+      "x": 24,
+      "y": 488.375,
+      "width": 814.5416870117188,
+      "height": 35.19791793823242,
+      "top": 488.375,
+      "right": 838.5416870117188,
+      "bottom": 523.5729179382324,
+      "left": 24
+    },
+    "before": 399.455539
+  },
+  "after": {
+    "events": [
+      {
+        "n": "pointerdown",
+        "x": 512.6666870117188,
+        "y": 504.66668701171875,
+        "c": "ytProgressBarLineProgressBarPlayed"
+      },
+      {
+        "n": "pointerdown",
+        "x": 512.6666870117188,
+        "y": 504.66668701171875,
+        "c": "ytProgressBarLineProgressBarPlayed"
+      }
+    ],
+    "time": 380.19575,
+    "seek": true,
+    "dark": "dark"
+  }
+}

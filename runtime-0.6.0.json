@@ -1,0 +1,196 @@
+{
+  "steadyStart": {
+    "media": {
+      "playing": true,
+      "title": "Big Buck Bunny 60fps 4K - Official Blender Foundation Short Film - YouTube",
+      "artist": "",
+      "position": 24212,
+      "duration": 634601,
+      "next": true,
+      "previous": false,
+      "diagnostics": {
+        "waiting": 1,
+        "stalled": 0,
+        "errors": 0
+      }
+    },
+    "audio": {
+      "graphs": 1,
+      "settings": {
+        "enabled": true,
+        "tone": [
+          1,
+          1,
+          1
+        ],
+        "clarity": 60,
+        "ambience": 60,
+        "width": 60,
+        "dynamics": 60,
+        "bass": 0,
+        "reverbPreset": 4,
+        "reverbAmount": 6
+      },
+      "context": "running",
+      "levels": [
+        {
+          "input": {
+            "rms": 0.023494515356495847,
+            "peak": 0.05765621364116669
+          },
+          "output": {
+            "rms": 0.023494515356495847,
+            "peak": 0.05765621364116669
+          }
+        }
+      ]
+    },
+    "now": 1791645364072
+  },
+  "steadyEnd": {
+    "media": {
+      "playing": true,
+      "title": "Big Buck Bunny 60fps 4K - Official Blender Foundation Short Film - YouTube",
+      "artist": "",
+      "position": 118505,
+      "duration": 634601,
+      "next": true,
+      "previous": false,
+      "diagnostics": {
+        "waiting": 1,
+        "stalled": 0,
+        "errors": 0
+      }
+    },
+    "audio": {
+      "graphs": 1,
+      "settings": {
+        "enabled": true,
+        "tone": [
+          1,
+          1,
+          1
+        ],
+        "clarity": 60,
+        "ambience": 60,
+        "width": 60,
+        "dynamics": 60,
+        "bass": 0,
+        "reverbPreset": 4,
+        "reverbAmount": 6
+      },
+      "context": "running",
+      "levels": [
+        {
+          "input": {
+            "rms": 0.054224058053156214,
+            "peak": 0.15844343602657318
+          },
+          "output": {
+            "rms": 0.11612040129751272,
+            "peak": 0.33264073729515076
+          }
+        }
+      ]
+    },
+    "now": 1791645458397
+  },
+  "nextLocked": {
+    "url": "https://m.youtube.com/watch?v=F2qMcrK4KY0",
+    "muted": false,
+    "state": {
+      "playing": true,
+      "title": "Tesoro in bottiglia \u2013 Cortometraggio Pikmin - YouTube",
+      "artist": "",
+      "position": 9399,
+      "duration": 480481,
+      "next": true,
+      "previous": true,
+      "diagnostics": {
+        "waiting": 2,
+        "stalled": 0,
+        "errors": 0
+      }
+    }
+  },
+  "previousLocked": {
+    "url": "https://m.youtube.com/watch?v=aqz-KE-bpKQ",
+    "muted": false,
+    "state": {
+      "playing": true,
+      "title": "Big Buck Bunny 60fps 4K - Official Blender Foundation Short Film - YouTube",
+      "artist": "",
+      "position": 23828,
+      "duration": 634601,
+      "next": true,
+      "previous": false,
+      "diagnostics": {
+        "waiting": 1,
+        "stalled": 0,
+        "errors": 0
+      }
+    }
+  },
+  "pauseLocked": {
+    "playing": false,
+    "title": "Big Buck Bunny 60fps 4K - Official Blender Foundation Short Film - YouTube",
+    "artist": "",
+    "position": 151081,
+    "duration": 634601,
+    "next": true,
+    "previous": false,
+    "diagnostics": {
+      "waiting": 1,
+      "stalled": 0,
+      "errors": 0
+    }
+  },
+  "resume": {
+    "state": {
+      "playing": true,
+      "title": "Big Buck Bunny 60fps 4K - Official Blender Foundation Short Film - YouTube",
+      "artist": "",
+      "position": 151764,
+      "duration": 634601,
+      "next": true,
+      "previous": false,
+      "diagnostics": {
+        "waiting": 1,
+        "stalled": 0,
+        "errors": 0
+      }
+    },
+    "audio": {
+      "graphs": 1,
+      "settings": {
+        "enabled": true,
+        "tone": [
+          1,
+          1,
+          1
+        ],
+        "clarity": 60,
+        "ambience": 60,
+        "width": 60,
+        "dynamics": 60,
+        "bass": 0,
+        "reverbPreset": 4,
+        "reverbAmount": 6
+      },
+      "context": "running",
+      "levels": [
+        {
+          "input": {
+            "rms": 0.10683708369113962,
+            "peak": 0.22671768069267273
+          },
+          "output": {
+            "rms": 0.18954432350548112,
+            "peak": 0.41324347257614136
+          }
+        }
+      ]
+    },
+    "zoom": "1.2"
+  }
+}

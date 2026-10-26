@@ -1,0 +1,54 @@
+{
+  "youtube": {
+    "time": 20.718667,
+    "paused": false,
+    "muted": false,
+    "status": "Processed audio active",
+    "audio": {
+      "graphs": 1,
+      "settings": {
+        "enabled": true,
+        "tone": [
+          0,
+          0,
+          0
+        ],
+        "clarity": 30,
+        "ambience": 20,
+        "width": 30,
+        "dynamics": 30,
+        "bass": 20,
+        "reverbPreset": 0,
+        "reverbAmount": 0
+      },
+      "context": "running",
+      "levels": [
+        {
+          "input": {
+            "rms": 0.06036454779672963,
+            "peak": 0.1543680876493454
+          },
+          "output": {
+            "rms": 0.08246893614989599,
+            "peak": 0.21175941824913025
+          }
+        }
+      ]
+    }
+  },
+  "coldStart": {
+    "enabled": true,
+    "tone": [
+      0,
+      0,
+      0
+    ],
+    "clarity": 0,
+    "ambience": 0,
+    "width": 0,
+    "dynamics": 0,
+    "bass": 0,
+    "reverbPreset": 0,
+    "reverbAmount": 0
+  }
+}

@@ -1,0 +1,76 @@
+{
+  "sampleRate": 48000,
+  "passed": 13,
+  "total": 13,
+  "results": [
+    {
+      "name": "Clarity keeps vocal-range level within 3 dB",
+      "pass": true,
+      "changeDb": -2.1744235906587606
+    },
+    {
+      "name": "Neutral graph retains nominal level",
+      "pass": true,
+      "rms": 0.14142135651913038
+    },
+    {
+      "name": "Zero controls return unmodified samples",
+      "pass": true,
+      "maxError": 3.6379791323523647e-13
+    },
+    {
+      "name": "Surround keeps mono centered with FxSound mid scaling",
+      "pass": true,
+      "midRatio": 0.7954939329897791,
+      "stereoError": 0
+    },
+    {
+      "name": "Surround matches FxSound 3.1x side and .79x mid gains",
+      "pass": true,
+      "sideRatio": 3.1140082235568243,
+      "midRatio": 0.7935699907519229
+    },
+    {
+      "name": "Dynamic Boost raises the quiet test tone",
+      "pass": true,
+      "changeDb": 4.4612028861741475
+    },
+    {
+      "name": "Clarity render matches the upstream Aural equation",
+      "pass": true,
+      "maxError": 2.6410054948522443e-07
+    },
+    {
+      "name": "Clarity produces odd harmonics, not just an EQ boost",
+      "pass": true,
+      "thirdHarmonicAmplitude": 0.0175752124713787
+    },
+    {
+      "name": "Ambience generates a short audible-scale tail",
+      "pass": true,
+      "tailRms": 0.024574123626792538
+    },
+    {
+      "name": "Concert hall has a stronger late tail than medium room",
+      "pass": true,
+      "roomTailRms": 2.9425097963176525e-05,
+      "hallTailRms": 0.002083813085345847
+    },
+    {
+      "name": "Huge cathedral retains a longer decay",
+      "pass": true,
+      "tailRms": 0.002831795816950257,
+      "hallTailRms": 0.00019122365276746833
+    },
+    {
+      "name": "Room tail has stereo diffusion",
+      "pass": true,
+      "correlation": -0.015685659743877468
+    },
+    {
+      "name": "All effects at maximum stay finite and below digital full scale",
+      "pass": true,
+      "peak": 0.9706031084060669
+    }
+  ]
+}

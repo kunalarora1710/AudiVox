@@ -1,0 +1,51 @@
+{
+  "id": 1,
+  "result": {
+    "result": {
+      "type": "object",
+      "value": {
+        "state": {
+          "playing": true,
+          "title": "Restless - YouTube",
+          "artist": "",
+          "position": 44134,
+          "duration": 168161,
+          "next": true,
+          "previous": false
+        },
+        "muted": false,
+        "audio": {
+          "graphs": 1,
+          "settings": {
+            "enabled": true,
+            "tone": [
+              0,
+              0,
+              0
+            ],
+            "clarity": 0,
+            "ambience": 0,
+            "width": 0,
+            "dynamics": 0,
+            "bass": 0,
+            "reverbPreset": 0,
+            "reverbAmount": 0
+          },
+          "context": "running",
+          "levels": [
+            {
+              "input": {
+                "rms": 0.14281364820286394,
+                "peak": 0.44396117329597473
+              },
+              "output": {
+                "rms": 0.14281364820286394,
+                "peak": 0.44396117329597473
+              }
+            }
+          ]
+        }
+      }
+    }
+  }
+}

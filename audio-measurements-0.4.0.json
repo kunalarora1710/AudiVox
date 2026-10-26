@@ -1,0 +1,55 @@
+{
+  "sampleRate": 48000,
+  "passed": 9,
+  "total": 9,
+  "results": [
+    {
+      "name": "Clarity keeps vocal-range level within 3 dB",
+      "pass": true,
+      "changeDb": 0.7151806391932415
+    },
+    {
+      "name": "Neutral graph retains nominal level",
+      "pass": true,
+      "rms": 0.14378989414967652
+    },
+    {
+      "name": "Surround preserves a centered mono vocal",
+      "pass": true,
+      "maxError": 0
+    },
+    {
+      "name": "Surround increases stereo side energy and retains mono sum",
+      "pass": true,
+      "sideRatio": 1.7670504878678546,
+      "monoSumError": 1.4156103134155273e-07
+    },
+    {
+      "name": "Ambience generates a short audible-scale tail",
+      "pass": true,
+      "tailRms": 0.017240232585280024
+    },
+    {
+      "name": "Concert hall has a stronger late tail than medium room",
+      "pass": true,
+      "roomTailRms": 2.9851519907997045e-05,
+      "hallTailRms": 0.0021165461488240546
+    },
+    {
+      "name": "Huge cathedral retains a longer decay",
+      "pass": true,
+      "tailRms": 0.002876302059697722,
+      "hallTailRms": 0.00019420243223627388
+    },
+    {
+      "name": "Room tail has stereo diffusion",
+      "pass": true,
+      "correlation": -0.01576224632475336
+    },
+    {
+      "name": "All effects at maximum stay finite and below digital full scale",
+      "pass": true,
+      "peak": 0.9749206900596619
+    }
+  ]
+}

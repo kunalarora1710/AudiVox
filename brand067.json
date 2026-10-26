@@ -1,0 +1,13 @@
+{
+  "id": 1,
+  "result": {
+    "result": {
+      "type": "object",
+      "value": {
+        "url": "https://m.youtube.com/",
+        "brand": "\"AudiVox\"",
+        "logo": "url(\"https://appassets.androidplatform.net/assets/audiovox-logo.png\")"
+      }
+    }
+  }
+}
