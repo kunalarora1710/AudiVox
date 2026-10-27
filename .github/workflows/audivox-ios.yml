@@ -1,429 +1,865 @@
 name: Build iOS IPA (Cloud Build)
 
+
+
 on:
+
   push:
+
     branches: [ main, master ]
+
   workflow_dispatch:
 
+
+
 permissions:
+
   contents: read
 
+
+
 jobs:
+
   build-ipa:
+
     runs-on: macos-14
+
     timeout-minutes: 25
+
     steps:
+
       - name: Checkout repository
+
         uses: actions/checkout@v4
 
-      - name: Prepare iOS Project & WebKit Audio Engine
+
+
+      - name: Select Full Xcode Environment
+
         run: |
+
+          sudo xcode-select -s /Applications/Xcode_15.4.app 2>/dev/null || sudo xcode-select -s /Applications/Xcode.app
+
+          xcodebuild -version
+
+
+
+      - name: Prepare iOS Project & WebKit Audio Engine
+
+        run: |
+
           mkdir -p ios_build/AudiVox/Assets.xcassets/AppIcon.appiconset ios_build/assets
+
           for f in ads.js AGPL-3.0.txt audio.js audiovox-logo.png browser.js dsp.js fx-adapted.js lab.html licenses.html media.js seek.js; do
+
             found=$(find . -maxdepth 4 -name "$f" -not -path "./ios_build/*" | head -n 1)
+
             if [ -n "$found" ]; then cp "$found" "ios_build/assets/$f"; fi
+
           done
+
           if [ -f "ios_build/assets/audiovox-logo.png" ]; then
+
             sips -s format png -z 1024 1024 "ios_build/assets/audiovox-logo.png" --out "ios_build/AudiVox/Assets.xcassets/AppIcon.appiconset/AppIcon-1024.png" || true
+
           fi
+
           cat << 'EOF' > ios_build/AudiVox/Assets.xcassets/Contents.json
+
           {"info":{"author":"xcode","version":1}}
+
           EOF
+
           cat << 'EOF' > ios_build/AudiVox/Assets.xcassets/AppIcon.appiconset/Contents.json
+
           {"images":[{"filename":"AppIcon-1024.png","idiom":"universal","platform":"ios","size":"1024x1024"}],"info":{"author":"xcode","version":1}}
+
           EOF
+
           python3 -c '
+
           from pathlib import Path
+
           p = Path("ios_build/assets/media.js")
+
           if p.exists():
+
               t = p.read_text()
+
               old = "if(window.ClearTubePlayback)window.ClearTubePlayback.postMessage(JSON.stringify(s));"
+
               new = "const payload=JSON.stringify(s);if(window.ClearTubePlayback)window.ClearTubePlayback.postMessage(payload);else if(window.webkit&&window.webkit.messageHandlers&&window.webkit.messageHandlers.ClearTubePlayback)window.webkit.messageHandlers.ClearTubePlayback.postMessage(payload);"
+
               if old in t: p.write_text(t.replace(old, new))
+
           a = Path("ios_build/assets/audio.js")
+
           if a.exists():
+
               at = a.read_text()
+
               at = at.replace("new(window.AudioContext||window.webkitAudioContext)({latencyHint:\"playback\"})", "(()=>{const AC=window.AudioContext||window.webkitAudioContext;try{return new AC({latencyHint:\"playback\"});}catch(_){return new AC();}})()")
+
               a.write_text(at)
+
           '
+
           cat << 'EOF' > ios_build/project.yml
+
           name: AudiVox
+
           options:
+
             bundleIdPrefix: app
+
             deploymentTarget:
+
               iOS: "15.0"
+
           settings:
+
             base:
+
               MARKETING_VERSION: "0.6.9"
+
               CURRENT_PROJECT_VERSION: "18"
+
               SWIFT_VERSION: "5.9"
+
               TARGETED_DEVICE_FAMILY: "1,2"
+
           targets:
+
             AudiVox:
+
               type: application
+
               platform: iOS
+
               deploymentTarget: "15.0"
+
               sources:
+
                 - path: AudiVox
+
                 - path: assets
+
                   buildPhase: resources
+
                   type: folder
+
               info:
+
                 path: AudiVox/Info.plist
+
                 properties:
+
                   CFBundleDisplayName: AudiVox
+
                   CFBundleName: AudiVox
+
                   CFBundleShortVersionString: "0.6.9"
+
                   CFBundleVersion: "18"
+
                   UILaunchScreen: {}
+
                   UIBackgroundModes:
+
                     - audio
+
                   UISupportedInterfaceOrientations:
+
                     - UIInterfaceOrientationPortrait
+
                     - UIInterfaceOrientationLandscapeLeft
+
                     - UIInterfaceOrientationLandscapeRight
+
                   NSAppTransportSecurity:
+
                     NSAllowsArbitraryLoads: false
+
               settings:
+
                 base:
+
                   PRODUCT_BUNDLE_IDENTIFIER: app.audivox
+
                   INFOPLIST_FILE: AudiVox/Info.plist
+
                   ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+
           EOF
+
           cat << 'EOF' > ios_build/AudiVox/AppDelegate.swift
+
           import UIKit
+
           import WebKit
+
           import AVFoundation
+
           import MediaPlayer
 
+
+
           @main
+
           class AppDelegate: UIResponder, UIApplicationDelegate {
+
               var window: UIWindow?
+
               func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+
                   let session = AVAudioSession.sharedInstance()
+
                   try? session.setCategory(.playback, mode: .default, options: [.allowAirPlay, .allowBluetooth, .allowBluetoothA2DP])
+
                   try? session.setActive(true)
+
                   let win = UIWindow(frame: UIScreen.main.bounds)
+
                   win.rootViewController = BrowserViewController()
+
                   win.makeKeyAndVisible()
+
                   self.window = win
+
                   return true
+
               }
+
           }
+
+
 
           final class AssetSchemeHandler: NSObject, WKURLSchemeHandler {
+
               static let scheme = "audivox-assets"
+
               static let labURL = "audivox-assets://appassets.androidplatform.net/assets/lab.html"
+
               static let licensesURL = "audivox-assets://appassets.androidplatform.net/assets/licenses.html"
 
+
+
               func webView(_ webView: WKWebView, start task: WKURLSchemeTask) {
+
                   guard let url = task.request.url,
+
                         let fileURL = Self.locate(url.lastPathComponent),
+
                         let data = try? Data(contentsOf: fileURL) else {
+
                       task.didFailWithError(URLError(.fileDoesNotExist))
+
                       return
+
                   }
+
                   let ext = (url.lastPathComponent as NSString).pathExtension.lowercased()
+
                   let mime = ext == "html" ? "text/html" : (ext == "js" ? "application/javascript" : (ext == "png" ? "image/png" : "text/plain"))
+
                   task.didReceive(URLResponse(url: url, mimeType: mime, expectedContentLength: data.count, textEncodingName: "utf-8"))
+
                   task.didReceive(data)
+
                   task.didFinish()
+
               }
+
               func webView(_ webView: WKWebView, stop task: WKURLSchemeTask) {}
+
               static func locate(_ name: String) -> URL? {
+
                   Bundle.main.url(forResource: name, withExtension: nil, subdirectory: "assets") ?? Bundle.main.url(forResource: name, withExtension: nil)
+
               }
+
               static func readText(_ name: String) -> String {
+
                   guard let u = locate(name), let s = try? String(contentsOf: u, encoding: .utf8) else { return "" }
+
                   return s
+
               }
+
           }
+
+
 
           final class BrowserViewController: UIViewController, WKNavigationDelegate, WKScriptMessageHandler {
+
               private var webView: WKWebView!
+
               private let addressField = UITextField()
+
               private var darkMode = false
+
               private var blockAds = true
+
               private var pageZoom = 100
+
               private var sound: [String: Any] = [
+
                   "schema": 5, "enabled": true, "clarity": 0, "ambience": 0,
+
                   "width": 0, "dynamics": 0, "bass": 0, "eqBass": 0,
+
                   "eqMid": 0, "eqTreble": 0, "reverbPreset": 0, "reverbAmount": 0
+
               ]
 
+
+
               override func viewDidLoad() {
+
                   super.viewDidLoad()
+
                   view.backgroundColor = UIColor(red: 17/255, green: 21/255, blue: 28/255, alpha: 1)
 
+
+
                   let topRow = UIStackView()
+
                   topRow.axis = .horizontal
+
                   topRow.spacing = 8
+
                   topRow.translatesAutoresizingMaskIntoConstraints = false
 
+
+
                   addressField.placeholder = "Search YouTube or enter HTTPS URL"
+
                   addressField.backgroundColor = UIColor(red: 30/255, green: 37/255, blue: 48/255, alpha: 1)
+
                   addressField.textColor = .white
+
                   addressField.layer.cornerRadius = 10
+
                   addressField.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: 1))
+
                   addressField.leftViewMode = .always
+
                   addressField.returnKeyType = .go
+
                   addressField.autocapitalizationType = .none
+
                   addressField.addTarget(self, action: #selector(goAddress), for: .editingDidEndOnExit)
 
+
+
                   let menuBtn = makeBtn("Menu") { [weak self] in self?.showMenu() }
+
                   topRow.addArrangedSubview(addressField)
+
                   topRow.addArrangedSubview(menuBtn)
 
+
+
                   let config = WKWebViewConfiguration()
+
                   config.allowsInlineMediaPlayback = true
+
                   config.mediaTypesRequiringUserActionForPlayback = []
+
                   config.setURLSchemeHandler(AssetSchemeHandler(), forURLScheme: AssetSchemeHandler.scheme)
+
                   let ucc = WKUserContentController()
+
                   ucc.add(self, name: "ClearTubePlayback")
+
                   config.userContentController = ucc
 
+
+
                   webView = WKWebView(frame: .zero, configuration: config)
+
                   webView.navigationDelegate = self
+
                   webView.allowsBackForwardNavigationGestures = true
+
                   webView.translatesAutoresizingMaskIntoConstraints = false
 
+
+
                   let bar = UIStackView()
+
                   bar.axis = .horizontal
+
                   bar.distribution = .fillEqually
+
                   bar.spacing = 6
+
                   bar.translatesAutoresizingMaskIntoConstraints = false
 
+
+
                   let actions: [(String, () -> Void)] = [
+
                       ("YouTube", { [weak self] in self?.loadURL("https://m.youtube.com") }),
+
                       ("Music", { [weak self] in self?.loadURL("https://music.youtube.com") }),
+
                       ("‹", { [weak self] in if self?.webView.canGoBack == true { self?.webView.goBack() } }),
+
                       ("Reload", { [weak self] in self?.webView.reload() }),
+
                       ("EQ", { [weak self] in self?.showSoundStudio() })
+
                   ]
+
                   for (title, act) in actions {
+
                       bar.addArrangedSubview(makeBtn(title, action: act))
+
                   }
+
+
 
                   view.addSubview(topRow)
+
                   view.addSubview(webView)
+
                   view.addSubview(bar)
 
+
+
                   NSLayoutConstraint.activate([
+
                       topRow.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 4),
+
                       topRow.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 8),
+
                       topRow.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -8),
+
                       topRow.heightAnchor.constraint(equalToConstant: 42),
+
                       menuBtn.widthAnchor.constraint(equalToConstant: 72),
 
+
+
                       webView.topAnchor.constraint(equalTo: topRow.bottomAnchor, constant: 4),
+
                       webView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+
                       webView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+
                       webView.bottomAnchor.constraint(equalTo: bar.topAnchor, constant: -4),
 
+
+
                       bar.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 8),
+
                       bar.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -8),
+
                       bar.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -4),
+
                       bar.heightAnchor.constraint(equalToConstant: 48)
+
                   ])
 
+
+
                   installScripts()
+
                   setupRemoteTransport()
+
                   loadURL("https://m.youtube.com")
+
               }
+
+
 
               private func makeBtn(_ title: String, action: @escaping () -> Void) -> UIButton {
+
                   let b = UIButton(type: .system)
+
                   b.setTitle(title, for: .normal)
+
                   b.setTitleColor(.white, for: .normal)
+
                   b.titleLabel?.font = .systemFont(ofSize: 14, weight: .semibold)
+
                   b.backgroundColor = UIColor(red: 27/255, green: 107/255, blue: 239/255, alpha: 1)
+
                   b.layer.cornerRadius = 10
+
                   b.addAction(UIAction { _ in action() }, for: .touchUpInside)
+
                   return b
+
               }
+
+
 
               @objc private func goAddress() {
+
                   let q = (addressField.text ?? "").trimmingCharacters(in: .whitespacesAndNewlines)
+
                   guard !q.isEmpty else { return }
+
                   addressField.resignFirstResponder()
+
                   if q.hasPrefix("https://") { loadURL(q) }
+
                   else if q.contains(".") && !q.contains(" ") { loadURL("https://" + q) }
+
                   else {
+
                       let enc = q.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? q
+
                       loadURL("https://m.youtube.com/results?search_query=" + enc)
+
                   }
+
               }
+
+
 
               private func loadURL(_ s: String) {
+
                   addressField.text = s
+
                   if let u = URL(string: s) { webView.load(URLRequest(url: u)) }
+
               }
+
+
 
               private func soundJSON() -> String {
+
                   guard let d = try? JSONSerialization.data(withJSONObject: sound),
+
                         let s = String(data: d, encoding: .utf8) else { return "{}" }
+
                   return s
+
               }
+
+
 
               private func fullScript() -> String {
+
                   let files = ["fx-adapted.js", "dsp.js", "audio.js", "ads.js", "media.js", "browser.js", "seek.js"]
+
                   let js = files.map { AssetSchemeHandler.readText($0) }.joined(separator: "\n")
+
                   return "if(window===window.top){\n\(js)\nif(window.ClearTubeBrowser){window.ClearTubeBrowser.setZoom(\(pageZoom));window.ClearTubeBrowser.setTheme(\(darkMode));}if(window.ClearTubeAudio)window.ClearTubeAudio.apply(\(soundJSON()));if(window.ClearTubeAds)window.ClearTubeAds.setEnabled(\(blockAds));}"
+
               }
+
+
 
               private func installScripts() {
+
                   let ucc = webView.configuration.userContentController
+
                   ucc.removeAllUserScripts()
+
                   ucc.addUserScript(WKUserScript(source: fullScript(), injectionTime: .atDocumentStart, forMainFrameOnly: true))
+
               }
+
+
 
               func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+
                   webView.evaluateJavaScript(fullScript(), completionHandler: nil)
+
               }
+
+
 
               private func applySound() {
+
                   installScripts()
+
                   webView.evaluateJavaScript("if(window.ClearTubeAudio)window.ClearTubeAudio.apply(\(soundJSON()));", completionHandler: nil)
+
               }
+
+
 
               private func showSoundStudio() {
+
                   let vc = UIViewController()
+
                   vc.view.backgroundColor = UIColor(red: 15/255, green: 15/255, blue: 19/255, alpha: 1)
+
                   let pink = UIColor(red: 238/255, green: 54/255, blue: 102/255, alpha: 1)
+
                   let stack = UIStackView()
+
                   stack.axis = .vertical
+
                   stack.spacing = 12
+
                   stack.translatesAutoresizingMaskIntoConstraints = false
+
                   vc.view.addSubview(stack)
+
                   NSLayoutConstraint.activate([
+
                       stack.topAnchor.constraint(equalTo: vc.view.safeAreaLayoutGuide.topAnchor, constant: 18),
+
                       stack.leadingAnchor.constraint(equalTo: vc.view.leadingAnchor, constant: 18),
+
                       stack.trailingAnchor.constraint(equalTo: vc.view.trailingAnchor, constant: -18)
+
                   ])
 
+
+
                   let header = UIStackView()
+
                   header.axis = .horizontal
+
                   let resetBtn = makeBtn("Reset") { [weak self, weak vc] in
+
                       guard let self = self else { return }
+
                       for k in ["clarity","ambience","width","dynamics","bass","eqBass","eqMid","eqTreble","reverbPreset","reverbAmount"] { self.sound[k] = 0 }
+
                       self.applySound()
+
                       vc?.dismiss(animated: true)
+
                   }
+
                   resetBtn.backgroundColor = pink
+
                   let doneBtn = makeBtn("Done") { [weak vc] in vc?.dismiss(animated: true) }
+
                   let title = UILabel()
+
                   title.text = "AudiVox Effects"
+
                   title.textColor = .white
+
                   title.font = .systemFont(ofSize: 20, weight: .bold)
+
                   title.textAlignment = .center
+
                   header.addArrangedSubview(resetBtn)
+
                   header.addArrangedSubview(title)
+
                   header.addArrangedSubview(doneBtn)
+
                   stack.addArrangedSubview(header)
 
+
+
                   for (name, key) in [("Clarity", "clarity"), ("Ambience", "ambience"), ("Surround Sound", "width"), ("Dynamic Boost", "dynamics")] {
+
                       let lbl = UILabel()
+
                       let cur = (sound[key] as? Int ?? 0) / 10
+
                       lbl.text = "\(name): \(cur)"
+
                       lbl.textColor = .white
+
                       let s = UISlider()
+
                       s.minimumValue = 0
+
                       s.maximumValue = 10
+
                       s.value = Float(cur)
+
                       s.minimumTrackTintColor = pink
+
                       s.addAction(UIAction { [weak self] act in
+
                           guard let self = self, let sl = act.sender as? UISlider else { return }
+
                           let step = Int(round(sl.value))
+
                           lbl.text = "\(name): \(step)"
+
                           self.sound[key] = step * 10
+
                           self.applySound()
+
                       }, for: .valueChanged)
+
                       stack.addArrangedSubview(lbl)
+
                       stack.addArrangedSubview(s)
+
                   }
+
+
 
                   let eqRow = UIStackView()
+
                   eqRow.axis = .horizontal
+
                   eqRow.distribution = .fillEqually
+
                   eqRow.spacing = 6
+
                   for (t, bVal) in [("Bass +", 1), ("Bass ++", 2), ("Treble +", 1)] {
+
                       eqRow.addArrangedSubview(makeBtn(t) { [weak self] in
+
                           guard let self = self else { return }
+
                           if t.hasPrefix("Bass") { self.sound["eqBass"] = bVal } else { self.sound["eqTreble"] = bVal }
+
                           self.applySound()
+
                       })
+
                   }
+
                   stack.addArrangedSubview(eqRow)
+
                   present(vc, animated: true)
+
               }
+
+
 
               private func showMenu() {
+
                   let sheet = UIAlertController(title: "AudiVox Menu", message: nil, preferredStyle: .actionSheet)
+
                   sheet.addAction(UIAlertAction(title: "SoundCloud", style: .default) { [weak self] _ in self?.loadURL("https://soundcloud.com") })
+
                   sheet.addAction(UIAlertAction(title: "My Audio Lab (Local File)", style: .default) { [weak self] _ in self?.loadURL(AssetSchemeHandler.labURL) })
+
                   sheet.addAction(UIAlertAction(title: blockAds ? "Ad Filtering: ON" : "Ad Filtering: OFF", style: .default) { [weak self] _ in
+
                       guard let self = self else { return }
+
                       self.blockAds.toggle()
+
                       self.installScripts()
+
                       self.webView.reload()
+
                   })
+
                   sheet.addAction(UIAlertAction(title: "Open-source Licenses", style: .default) { [weak self] _ in self?.loadURL(AssetSchemeHandler.licensesURL) })
+
                   sheet.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+
                   if let pop = sheet.popoverPresentationController { pop.sourceView = view }
+
                   present(sheet, animated: true)
+
               }
+
+
 
               private func setupRemoteTransport() {
+
                   let c = MPRemoteCommandCenter.shared()
+
                   c.playCommand.addTarget { [weak self] _ in self?.webView.evaluateJavaScript("if(window.ClearTubeMedia)window.ClearTubeMedia.command('play',0);"); return .success }
+
                   c.pauseCommand.addTarget { [weak self] _ in self?.webView.evaluateJavaScript("if(window.ClearTubeMedia)window.ClearTubeMedia.command('pause',0);"); return .success }
+
                   c.nextTrackCommand.addTarget { [weak self] _ in self?.webView.evaluateJavaScript("if(window.ClearTubeMedia)window.ClearTubeMedia.command('next',0);"); return .success }
+
                   c.previousTrackCommand.addTarget { [weak self] _ in self?.webView.evaluateJavaScript("if(window.ClearTubeMedia)window.ClearTubeMedia.command('previous',0);"); return .success }
+
               }
+
+
 
               func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
+
                   guard let s = message.body as? String,
+
                         let d = s.data(using: .utf8),
+
                         let j = try? JSONSerialization.jsonObject(with: d) as? [String: Any] else { return }
+
                   let playing = j["playing"] as? Bool ?? false
+
                   let title = j["title"] as? String ?? "AudiVox"
+
                   MPNowPlayingInfoCenter.default().nowPlayingInfo = [
+
                       MPMediaItemPropertyTitle: title,
+
                       MPNowPlayingInfoPropertyPlaybackRate: playing ? 1.0 : 0.0
+
                   ]
+
               }
+
           }
+
           EOF
 
+
+
       - name: Generate Xcode Project with XcodeGen
+
         run: |
+
           which xcodegen || brew install xcodegen
+
           cd ios_build
+
           xcodegen generate
 
+
+
       - name: Compile iOS App (Release ARM64)
+
         run: |
+
           cd ios_build
+
           xcodebuild clean build \
+
             -project AudiVox.xcodeproj \
+
             -scheme AudiVox \
+
             -configuration Release \
-            -sdk iphoneos \
-            -derivedDataPath build \
+
+            -destination "generic/platform=iOS" \
+
             CODE_SIGN_IDENTITY="" \
+
             CODE_SIGNING_REQUIRED=NO \
+
             CODE_SIGNING_ALLOWED=NO
 
+
+
       - name: Package AudiVox.ipa
+
         run: |
+
           mkdir -p ios_build/build/Payload
+
           cp -R ios_build/build/Build/Products/Release-iphoneos/AudiVox.app ios_build/build/Payload/
+
           cd ios_build/build
+
           zip -r -9 AudiVox.ipa Payload
 
+
+
       - name: Upload AudiVox.ipa Artifact
+
         uses: actions/upload-artifact@v4
+
         with:
+
           name: AudiVox-iOS-IPA
+
           path: ios_build/build/AudiVox.ipa
+
           if-no-files-found: error
